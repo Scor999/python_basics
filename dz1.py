@@ -27,28 +27,55 @@
 # “Число является простым, если делится нацело только на единицу и на себя”. Сделайте ограничение на ввод отрицательных чисел и 
 # --чисел больше 100 тысяч.
 
-def is_prime(number):
-    if number <= 1:
-        return False
-    if number <= 3:
-        return True
-    if number % 2 == 0 or number % 3 == 0:
-        return False
-    i = 5
-    while i * i <= number:
-        if number % i == 0 or number % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+# def is_prime(number):
+#     if number <= 1:
+#         return False
+#     if number <= 3:
+#         return True
+#     if number % 2 == 0 or number % 3 == 0:
+#         return False
+#     i = 5
+#     while i * i <= number:
+#         if number % i == 0 or number % (i + 2) == 0:
+#             return False
+#         i += 6
+#     return True
 
-try:
-    number = int(input("Введите число (от 0 до 100000): "))
-    if number < 0 or number > 100000:
-        print("Число должно быть от 0 до 100000")
+# try:
+#     number = int(input("Введите число (от 2 до 100000): "))
+#     if number < 2 or number > 100000:
+#         print("Число должно быть от 2 до 100000")
+#     else:
+#         if is_prime(number):
+#             print(f"{number} - простое число")
+#         else:
+#             print(f"{number} - составное число")
+# except ValueError:
+#     print("Введите корректное целое число")
+
+
+from random import randint
+
+LOWER_LIMIT = 0
+UPPER_LIMIT = 1000
+TARGET_NUMBER = randint(LOWER_LIMIT, UPPER_LIMIT)
+MAX_ATTEMPTS = 10
+
+print("Программа загадала число от 0 до 1000. Попробуйте угадать за 10 попыток.")
+
+for attempt in range(MAX_ATTEMPTS):
+    guess = int(input(f"Попытка {attempt + 1}/{MAX_ATTEMPTS}. Ваше предположение: "))
+    
+    if guess < LOWER_LIMIT or guess > UPPER_LIMIT:
+        print(f"Введите число от {LOWER_LIMIT} до {UPPER_LIMIT}.")
+        continue
+    
+    if guess < TARGET_NUMBER:
+        print("Загаданное число больше вашего предположения.")
+    elif guess > TARGET_NUMBER:
+        print("Загаданное число меньше вашего предположения.")
     else:
-        if is_prime(number):
-            print(f"{number} - простое число")
-        else:
-            print(f"{number} - составное число")
-except ValueError:
-    print("Введите корректное целое число")
+        print(f"Поздравляем! Вы угадали число {TARGET_NUMBER} за {attempt + 1} попыток.")
+        break
+else:
+    print(f"К сожалению, вы не угадали число {TARGET_NUMBER} за {MAX_ATTEMPTS} попыток. Правильный ответ был {TARGET_NUMBER}.")
